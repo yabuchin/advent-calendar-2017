@@ -1,0 +1,54 @@
+@import "~firebaseui/dist/firebaseui.css";
+
+$accentColor: #00B0FF;
+
+html {
+    font-size: 62.5%;
+}
+
+.container {
+    width: 500px;
+    margin: auto;
+}
+
+#sign-in-status {
+    margin-top: 62px;
+    font-size: 1.6rem;
+}
+
+#account-details {
+    .profile {
+        margin-top: 24px;
+        display: flex;
+        .profileIcon {
+            img {
+                width: 64px;
+                height: 64px;
+                border-radius: 100%;
+            }
+        }
+        .profileDetail {
+            margin-left: 24px;
+            font-size: 1.8rem;
+            #displayName {
+
+            }
+            #email {
+                margin-top: 8px;
+            }
+            #phoneNumber {
+                margin-top: 8px;
+            }
+        }
+    }
+}
+
+.signOut {
+    margin-top: 24px;
+    font-size: 1.6rem;
+    padding: 8px 16px;
+    color: $accentColor;
+    border: 1px solid $accentColor;
+    border-radius: 2px;
+    background: #fff;
+}
