@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,24 +8,28 @@
     <title>Screen Casting</title>
     <link rel="stylesheet" href="bundle.css">
 </head>
+
 <body>
     <div class="container">
-    <div id="firebaseui-auth-container"></div>
-    <div id="account-details">
-        <div id="sign-in-status"></div>
-        <div class="profile">
-        <div class="profileIcon">
-            <img id="photoURL" src="">
+        <div class="app"></div>
+        <div id="firebaseui-auth-container"></div>
+        <div id="account-details">
+            <div id="sign-in-status"></div>
+            <div class="profile">
+                <div class="profileIcon">
+                    <img id="photoURL" src="">
+                </div>
+                <div class="profileDetail">
+                    <div id="displayName"></div>
+                    <div id="email"></div>
+                    <div id="phoneNumber"></div>
+                </div>
+            </div>
+            <button class="signOut">sign out</button>
         </div>
-        <div class="profileDetail">
-            <div id="displayName"></div>
-            <div id="email"></div>
-            <div id="phoneNumber"></div>
-        </div>
-        </div>
-        <button class="signOut">sign out</button>
-    </div>
     </div>
 </body>
+<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
 <script src="bundle.js" charset="utf-8"></script>
+
 </html>
