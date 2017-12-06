@@ -1,5 +1,8 @@
+import { browserHistory } from 'react-router-dom';
+
 import firebase from 'firebase';
 import firebaseui from 'firebaseui';
+
 
 class Firebase {
   constructor() {
@@ -16,7 +19,7 @@ class Firebase {
     this.firebase.initializeApp(config);
 
     this.uiConfig = {
-      signInSuccessUrl: 'http://localhost:8080',
+      signInSuccessUrl: 'http://localhost:8080/feeds',
       signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -24,16 +27,40 @@ class Firebase {
         firebase.auth.TwitterAuthProvider.PROVIDER_ID,
         firebase.auth.GithubAuthProvider.PROVIDER_ID,
         firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        firebase.auth.PhoneAuthProvider.PROVIDER_ID,
       ],
       // Terms of service url.
       tosUrl: 'http://localhost:8080',
     };
     this.authUi = new firebaseui.auth.AuthUI(firebase.auth());
+
+    // ログイン時の処理
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        /*
+        document.getElementById('account-details').style.display = 'block';
+        user.getIdToken().then(() => {
+          document.getElementById('sign-in-status').textContent = 'Signed in';
+          document.getElementById('photoURL').src = user.photoURL;
+          document.getElementById('displayName').textContent = user.displayName;
+          document.getElementById('email').textContent = user.email;
+        });
+        */
+        browserHistory.push('/feeds');
+      } else {
+        // User is signed out.
+        browserHistory.push('/login');
+      }
+    }, (error) => {
+      window.console.log(error);
+    });
   }
 
   authUIStart() {
     this.authUi.start('.firebaseAuthUI', this.uiConfig);
+  }
+
+  signOut() {
+    this.firebase.auth().signOut();
   }
 }
 
