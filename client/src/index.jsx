@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import firebase from 'firebase';
-import firebaseui from 'firebaseui';
-
 import App from './components/app';
 
 // Initialize Firebase
+/*
 const config = {
   apiKey: 'AIzaSyD7HY5esLhiupVV4niadE7hihb_wIB5CqQ',
   authDomain: 'techcasting-5d36a.firebaseapp.com',
@@ -63,5 +61,5 @@ window.addEventListener('load', () => {
 document.getElementsByClassName('signOut')[0].addEventListener('click', () => {
   firebase.auth().signOut();
 });
-
+*/
 ReactDOM.render(<App />, document.querySelector('.app'));

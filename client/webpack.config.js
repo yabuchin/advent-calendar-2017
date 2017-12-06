@@ -1,6 +1,6 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
- 
+
 const publidDir = path.join(__dirname, '/public');
 module.exports = [
   {
