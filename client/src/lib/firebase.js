@@ -1,5 +1,3 @@
-import { browserHistory } from 'react-router-dom';
-
 import firebase from 'firebase';
 import firebaseui from 'firebaseui';
 
@@ -35,7 +33,7 @@ class Firebase {
 
     // ログイン時の処理
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
+      if (user && window.location.pathname !== '/feeds') {
         /*
         document.getElementById('account-details').style.display = 'block';
         user.getIdToken().then(() => {
@@ -45,10 +43,11 @@ class Firebase {
           document.getElementById('email').textContent = user.email;
         });
         */
-        browserHistory.push('/feeds');
-      } else {
-        // User is signed out.
-        browserHistory.push('/login');
+        // hrefでのページ遷移は絶対間違ってるけど、現状いい方法が分からないので放置
+        window.location.href = '/feeds';
+      } else if (!user && window.location.pathname !== '/') {
+        // hrefでのページ遷移は絶対間違ってるけど、現状いい方法が分からないので放置
+        window.location.href = '/';
       }
     }, (error) => {
       window.console.log(error);
