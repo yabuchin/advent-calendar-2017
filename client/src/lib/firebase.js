@@ -1,5 +1,3 @@
-import { browserHistory } from 'react-router-dom';
-
 import firebase from 'firebase';
 import firebaseui from 'firebaseui';
 
@@ -7,6 +5,7 @@ import firebaseui from 'firebaseui';
 class Firebase {
   constructor() {
     this.firebase = firebase;
+    this.user = null;
 
     const config = {
       apiKey: 'AIzaSyD7HY5esLhiupVV4niadE7hihb_wIB5CqQ',
@@ -36,6 +35,9 @@ class Firebase {
     // ログイン時の処理
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        this.user = user;
+      } else if (user && window.location.pathname !== '/feeds') {
+        this.user = user;
         /*
         document.getElementById('account-details').style.display = 'block';
         user.getIdToken().then(() => {
@@ -45,10 +47,12 @@ class Firebase {
           document.getElementById('email').textContent = user.email;
         });
         */
-        browserHistory.push('/feeds');
-      } else {
-        // User is signed out.
-        browserHistory.push('/login');
+        // hrefでのページ遷移は絶対間違ってるけど、現状いい方法が分からないので放置
+        window.location.href = '/feeds';
+      } else if (!user && window.location.pathname !== '/') {
+        this.user = null;
+        // hrefでのページ遷移は絶対間違ってるけど、現状いい方法が分からないので放置
+        window.location.href = '/';
       }
     }, (error) => {
       window.console.log(error);
