@@ -5,16 +5,22 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import Feed from './feed';
+import FeedTable from './FeedTable';
 import Login from './login';
+import Header from './header';
 
 const App = () => (
-  <Router>
-    <Switch>
-      <Route exact path="/" component={Login} />
-      <Route path="/feeds" component={Feed} />
-    </Switch>
-  </Router>
+  <div>
+    <Header />
+    <div className="container">
+      <Router>
+        <Switch>
+          <Route path="/" component={FeedTable} />
+          <Route exact path="/login" component={Login} />
+        </Switch>
+      </Router>
+    </div>
+  </div>
 );
 
 export default App;

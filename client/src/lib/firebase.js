@@ -36,8 +36,6 @@ class Firebase {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.user = user;
-      } else if (user && window.location.pathname !== '/feeds') {
-        this.user = user;
         /*
         document.getElementById('account-details').style.display = 'block';
         user.getIdToken().then(() => {
@@ -47,12 +45,8 @@ class Firebase {
           document.getElementById('email').textContent = user.email;
         });
         */
-        // hrefでのページ遷移は絶対間違ってるけど、現状いい方法が分からないので放置
-        window.location.href = '/feeds';
-      } else if (!user && window.location.pathname !== '/') {
+      } else {
         this.user = null;
-        // hrefでのページ遷移は絶対間違ってるけど、現状いい方法が分からないので放置
-        window.location.href = '/';
       }
     }, (error) => {
       window.console.log(error);

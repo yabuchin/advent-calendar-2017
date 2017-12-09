@@ -1,5 +1,28 @@
+@import 'common';
+
 .feeds {
-    .title {
-        font-size: 2.0rem;
+    margin: 54px 0;
+    padding: 0 24px;
+    .feedRow {
+        margin-top: 24px;
+        background-color: white;
+        padding: 16px;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+        .title {
+            font-size: 2.4rem;
+            font-weight: bold;
+            color: $primaryDark;
+        }
+        .description {
+            margin-top: 12px;
+            font-size: 1.8rem;
+            color: $primaryDark;
+        }
+        .user {
+            font-size: 1.8rem;
+            margin-top: 12px;
+            color: $secondaryDark;
+        }
     }
 }
