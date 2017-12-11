@@ -1,6 +1,4 @@
-@import "~firebaseui/dist/firebaseui.css";
-
-$accentColor: #00B0FF;
+@import "common";
 
 * {
     box-sizing: border-box;
@@ -12,7 +10,7 @@ html {
 
 body {
     margin: 0;
-    background-color: #f5f5f5;
+    background-color: $backgroundColor;
 }
 
 .container {
@@ -21,50 +19,7 @@ body {
     margin: auto;
 }
 
-#sign-in-status {
-    margin-top: 62px;
-    font-size: 1.6rem;
-}
-
-#account-details {
-    .profile {
-        margin-top: 24px;
-        display: flex;
-
-        .profileIcon {
-            img {
-                width: 64px;
-                height: 64px;
-                border-radius: 100%;
-            }
-        }
-
-        .profileDetail {
-            margin-left: 24px;
-            font-size: 1.8rem;
-
-            #displayName {}
-
-            #email {
-                margin-top: 8px;
-            }
-
-            #phoneNumber {
-                margin-top: 8px;
-            }
-        }
-    }
-}
-
-.signOut {
-    margin-top: 24px;
-    font-size: 1.6rem;
-    padding: 8px 16px;
-    color: $accentColor;
-    border: 1px solid $accentColor;
-    border-radius: 2px;
-    background: #fff;
-}
-
 @import 'header';
 @import 'feeds';
+
+@import "~firebaseui/dist/firebaseui.css";

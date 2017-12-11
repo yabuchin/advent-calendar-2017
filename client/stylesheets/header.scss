@@ -1,10 +1,13 @@
+@import 'common';
+
 .header {
     width: 100%;
     height: 56px;
-    background-color: #333;
+    background-color: white;
+    border-bottom: 1px solid $divider;
     .nav {
         position: relative;
-        background-color: #333;
+        background-color: white;
         height: 100%;
         width: 100%;
         max-width: 768px;
@@ -14,17 +17,12 @@
             display: inline-block;
             font-size: 1.8rem;
             font-weight: bold;
-            color: white;
+            color: $primaryDark;
             position: relative;
             top: 16px;
         }
         .user {
-            display: inline-block;
-            padding: 4px 16px;
-            font-size: 1.8rem;
-            color: white;
-            border: 1px solid white;
-            border-radius: 2px;
+            @include btn;
             position: absolute;
             right: 32px;
             top: 12px;
