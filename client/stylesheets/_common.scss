@@ -12,6 +12,12 @@ $accentColor: #00B0FF;
     padding: 4px 16px;
     font-size: 1.8rem;
     color: $accentColor;
+    background-color: white;
     border: 1px solid $accentColor;
     border-radius: 2px;
+    cursor: pointer;
+}
+
+@mixin btnActive {
+    background-color: #eee;
 }

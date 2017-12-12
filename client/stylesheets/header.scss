@@ -1,6 +1,8 @@
 @import 'common';
 
 .header {
+    position: fixed;
+    top: 0;
     width: 100%;
     height: 56px;
     background-color: white;
@@ -20,12 +22,29 @@
             color: $primaryDark;
             position: relative;
             top: 16px;
+            a {
+                text-decoration: none;
+                color: $primaryDark;
+            }
+        }
+        .newStoryBtn {
+            @include btn;
+            float: right;
+            position: relative;
+            top: 12px;
+            right: 24px;
+        }
+        .newStoryBtn:active {
+            @include btnActive;
         }
         .user {
             @include btn;
-            position: absolute;
-            right: 32px;
+            float: right;
+            position: relative;
             top: 12px;
+        }
+        .user:active {
+            @include btnActive;
         }
     }
 }
