@@ -36,6 +36,8 @@ class Firebase {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.user = user;
+      }
+      if (user && window.location.pathname === '/login') {
         /*
         document.getElementById('account-details').style.display = 'block';
         user.getIdToken().then(() => {
@@ -45,8 +47,8 @@ class Firebase {
           document.getElementById('email').textContent = user.email;
         });
         */
-      } else {
-        this.user = null;
+        // hrefでのページ遷移は絶対間違ってるけど、現状いい方法が分からないので放置
+        window.location.href = '/';
       }
     }, (error) => {
       window.console.log(error);
