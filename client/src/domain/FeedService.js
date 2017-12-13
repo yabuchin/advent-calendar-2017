@@ -1,5 +1,8 @@
+import firebase from '../lib/firebase';
+
 class FeedService {
   constructor() {
+    this.fireabase = firebase;
     this.feedList = [
       {
         itemId: '1',
@@ -50,7 +53,8 @@ class FeedService {
   }
 
   list() {
-    return this.feedList;
+    return this.firebase.db.collection('feeds').get();
+    // return this.feedList;
   }
 
   add(title, url, description) {

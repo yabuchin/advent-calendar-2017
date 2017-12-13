@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import feedService from '../domain/FeedService';
+import firebase from '../lib/firebase';
 
 class NewStory extends React.Component {
   constructor(props) {
@@ -31,41 +31,60 @@ class NewStory extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    feedService.add(this.state.title, this.state.url, this.state.description);
-    this.props.history.push('/');
+    const feed = {
+      title: this.state.title,
+      url: this.state.url,
+      description: this.state.description,
+      userId: '1',
+      userName: 'yabu',
+      userIconUrl: 'http://example.com',
+    };
+
+    firebase.db.collection('feeds').add(feed).then((docRef) => {
+      window.console.log(`id -> ${docRef.id}`);
+      this.props.history.push('/');
+    }).catch((error) => {
+      window.alert(`AddDocumentError: ${error}`);
+    });
   }
 
   render() {
     return (
       <div className="newStory">
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="title">
-            Title:
-            <input
-              id="title"
-              type="text"
-              value={this.state.title}
-              onChange={this.onTitleChange}
-            />
-          </label>
-          <label htmlFor="url">
-            Url:
-            <input
-              id="url"
-              type="text"
-              value={this.state.url}
-              onChange={this.onUrlChange}
-            />
-          </label>
-          <label htmlFor="description">
-            Description:
-            <textarea
-              id="description"
-              value={this.state.description}
-              onChange={this.onDescriptionChange}
-            />
-          </label>
-          <input type="submit" value="Submit" />
+          <div className="newStory_form">
+            <label htmlFor="title">
+              Title:
+              <input
+                id="title"
+                type="text"
+                value={this.state.title}
+                onChange={this.onTitleChange}
+              />
+            </label>
+          </div>
+          <div className="newStory_form">
+            <label htmlFor="url">
+              Url:
+              <input
+                id="url"
+                type="text"
+                value={this.state.url}
+                onChange={this.onUrlChange}
+              />
+            </label>
+          </div>
+          <div className="newStory_form">
+            <label htmlFor="description">
+              Description:
+              <textarea
+                id="description"
+                value={this.state.description}
+                onChange={this.onDescriptionChange}
+              />
+            </label>
+          </div>
+          <input className="submit" type="submit" value="Submit" />
         </form>
       </div>
     );

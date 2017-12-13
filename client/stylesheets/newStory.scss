@@ -1,0 +1,24 @@
+@import 'common';
+
+.newStory {
+    padding: 16px;
+    background-color: white;
+    &_form {
+        label {
+            font-size: 1.8rem;
+            color: $primaryDark;
+            input, textarea {
+                font-size: 1.8rem;
+                border: none;
+                border-bottom: 1px solid #ccc;
+            }
+        }
+    }
+    input.submit {
+        margin-top: 24px;
+        @include btn;
+    }
+    input.submit:active {
+        @include btnActive;
+    }
+}
