@@ -12,8 +12,8 @@ import Header from './header';
 import firebase from '../lib/firebase';
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.user = firebase.user;
   }
 
@@ -26,7 +26,7 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/" component={FeedTable} />
               <Route path="/login" component={Login} />
-              <Route path="/newStory" component={NewStory} />
+              <Route path="/newStory" component={NewStory} getFeeds={this.getFeeds} />
             </Switch>
           </Router>
         </div>

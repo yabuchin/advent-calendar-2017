@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import 'firebase/firestore';
 import firebaseui from 'firebaseui';
 
 
@@ -16,6 +17,8 @@ class Firebase {
       messagingSenderId: '772833070744',
     };
     this.firebase.initializeApp(config);
+
+    this.db = this.firebase.firestore();
 
     this.uiConfig = {
       signInSuccessUrl: 'http://localhost:8080/feeds',
@@ -61,6 +64,10 @@ class Firebase {
 
   signOut() {
     this.firebase.auth().signOut();
+  }
+
+  feeds() {
+    return this.db.collection('feeds').get();
   }
 }
 
