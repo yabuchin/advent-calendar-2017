@@ -37,13 +37,23 @@
         .newStoryBtn:active {
             @include btnActive;
         }
-        .user {
+        .headerMenu {
+            float:right;
+            .userName {
+                font-size: 1.8rem;
+                float: right;
+                margin: 0 8px;
+                position: relative;
+                top: 16px;
+            }
+        }
+        .login, .signOutButton {
             @include btn;
             float: right;
             position: relative;
             top: 12px;
         }
-        .user:active {
+        .login:active, .signOutButton:active {
             @include btnActive;
         }
     }

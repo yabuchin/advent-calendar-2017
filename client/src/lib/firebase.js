@@ -21,7 +21,7 @@ class Firebase {
     this.db = this.firebase.firestore();
 
     this.uiConfig = {
-      signInSuccessUrl: 'http://localhost:8080/feeds',
+      signInSuccessUrl: 'http://localhost:8080',
       signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -34,28 +34,6 @@ class Firebase {
       tosUrl: 'http://localhost:8080',
     };
     this.authUi = new firebaseui.auth.AuthUI(firebase.auth());
-
-    // ログイン時の処理
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.user = user;
-      }
-      if (user && window.location.pathname === '/login') {
-        /*
-        document.getElementById('account-details').style.display = 'block';
-        user.getIdToken().then(() => {
-          document.getElementById('sign-in-status').textContent = 'Signed in';
-          document.getElementById('photoURL').src = user.photoURL;
-          document.getElementById('displayName').textContent = user.displayName;
-          document.getElementById('email').textContent = user.email;
-        });
-        */
-        // hrefでのページ遷移は絶対間違ってるけど、現状いい方法が分からないので放置
-        window.location.href = '/';
-      }
-    }, (error) => {
-      window.console.log(error);
-    });
   }
 
   authUIStart() {

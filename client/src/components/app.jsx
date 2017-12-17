@@ -14,13 +14,27 @@ import firebase from '../lib/firebase';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.user = firebase.user;
+    this.firebase = firebase.firebase;
+    this.state = {
+      user: firebase.user,
+    };
+
+    // ユーザの認証状態が変化したら呼ばれる
+    this.firebase.auth().onAuthStateChanged((user) => {
+      // ユーザ情報をｓtateに保存
+      this.setState({ user });
+      if (window.location.pathname === '/login') {
+        window.location.href = '/';
+      }
+    }, (error) => {
+      window.console.log(error);
+    });
   }
 
   render() {
     return (
       <div>
-        <Header user={this.user} />
+        <Header user={this.state.user} />
         <div className="container">
           <Router>
             <Switch>
