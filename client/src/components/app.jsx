@@ -38,7 +38,10 @@ class App extends React.Component {
 
       userRef.get().then((userDoc) => {
         if (userDoc.exists) { // DBにユーザ登録済み
-          setUser(userDoc.data());
+          const user = userDoc.data();
+          user.userId = userDoc.id;
+          window.console.log('user exists: ', user.userId);
+          setUser(user);
         } else { // DBに未登録
           // 新規ユーザデータを作成
           const newUser = {
@@ -49,7 +52,10 @@ class App extends React.Component {
           firebase.db.collection('users').doc(u.uid).set(newUser)
             .then((docRef) => {
               window.console.log('create user: ', docRef.key);
-              setUser(docRef.data());
+              const user = userDoc.data();
+              user.userId = userDoc.id;
+              window.console.log('user exists: ', user.userId);
+              setUser(user);
             })
             .catch((error) => {
               window.console.error('can\'t create user:', error);
@@ -72,7 +78,12 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/" component={FeedTable} />
               <Route path="/login" component={Login} />
-              <Route path="/newStory" component={NewStory} getFeeds={this.getFeeds} />
+              <Route
+                path="/newStory"
+                render={props => <NewStory {...props} user={this.state.user} />}
+                // component={NewStory}
+                // user={this.state.user}
+              />
             </Switch>
           </Router>
         </div>

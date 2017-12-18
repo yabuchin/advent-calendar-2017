@@ -45,7 +45,7 @@ class Firebase {
   }
 
   feeds() {
-    return this.db.collection('feeds').get();
+    return this.db.collection('documents').get();
   }
 }
 
