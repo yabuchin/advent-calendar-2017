@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'uuid/v4';
 
 import firebase from '../lib/firebase';
+
 
 class NewStory extends React.Component {
   constructor(props) {
@@ -35,22 +37,47 @@ class NewStory extends React.Component {
       title: this.state.title,
       url: this.state.url,
       description: this.state.description,
-      userId: '1',
-      userName: 'yabu',
-      userIconUrl: 'http://example.com',
+      userId: this.props.user.userId,
+      userName: this.props.user.displayName,
+      userIconUrl: this.props.user.photoUrl,
     };
 
-    firebase.db.collection('feeds').add(feed).then((docRef) => {
-      window.console.log(`id -> ${docRef.id}`);
-      this.props.history.push('/');
-    }).catch((error) => {
-      window.alert(`AddDocumentError: ${error}`);
-    });
+    // 新しいバッチ処理を生成
+    const batch = firebase.db.batch();
+    const docId = uuid();
+
+    // user/documentsに記事を追加
+    const docRef =
+      firebase.db
+        .collection('users')
+        .doc(this.props.user.userId)
+        .collection('documents')
+        .doc(docId);
+    batch.set(docRef, feed);
+
+    // documentsに記事を追加
+    const feedRef =
+      firebase.db
+        .collection('documents')
+        .doc(docId);
+    batch.set(feedRef, feed);
+
+    // バッチをコミット
+    batch.commit()
+      .then(() => {
+        // 成功したら、ログを出して、フィート一覧に戻る
+        window.console.log('document create succeeded');
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        window.alert(`AddDocumentError: ${error}`);
+      });
   }
 
   render() {
     return (
       <div className="newStory">
+        <div>userName: {this.props.user && this.props.user.displayName}</div>
         <form onSubmit={this.handleSubmit}>
           <div className="newStory_form">
             <label htmlFor="title">
@@ -92,7 +119,20 @@ class NewStory extends React.Component {
 }
 
 NewStory.propTypes = {
+  user: PropTypes.shape({
+    userId: PropTypes.string,
+    displayName: PropTypes.string,
+    photoUrl: PropTypes.string,
+  }),
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};
+
+NewStory.defaultProps = {
+  user: {
+    userId: '',
+    displayName: '',
+    photoUrl: '',
+  },
 };
 
 export default NewStory;
