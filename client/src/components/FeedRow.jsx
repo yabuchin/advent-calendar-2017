@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Link } from 'react-router-dom';
+
 const FeedRow = props => (
-  <div className="feedRow">
-    <div className="title">{props.feed.title}</div>
-    <div className="description">{props.feed.description}</div>
-    <div className="user">{props.feed.userName}</div>
-  </div>
+  <Link to={`/document/${props.feed.itemId}`}>
+    <div className="feedRow">
+      <div className="title">{props.feed.title}</div>
+      <div className="description">{props.feed.description}</div>
+      <div className="user">{props.feed.userName}</div>
+    </div>
+  </Link>
 );
 
 FeedRow.propTypes = {

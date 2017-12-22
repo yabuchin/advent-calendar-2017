@@ -8,6 +8,7 @@ import {
 import FeedTable from './FeedTable';
 import Login from './login';
 import NewStory from './NewStory';
+import Document from './Document';
 import Header from './header';
 import firebase from '../lib/firebase';
 
@@ -84,6 +85,7 @@ class App extends React.Component {
                 // component={NewStory}
                 // user={this.state.user}
               />
+              <Route path="/document/:id" component={Document} />
             </Switch>
           </Router>
         </div>

@@ -1,0 +1,22 @@
+@import 'common';
+
+.document{
+    background-color: white;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    font-size: 1.8rem;
+
+    &_title {
+
+    }
+    &_url {
+
+    }
+    &_description {
+
+    }
+    &_userName {
+
+    }
+}

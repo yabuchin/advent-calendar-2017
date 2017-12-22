@@ -77,7 +77,6 @@ class NewStory extends React.Component {
   render() {
     return (
       <div className="newStory">
-        <div>userName: {this.props.user && this.props.user.displayName}</div>
         <form onSubmit={this.handleSubmit}>
           <div className="newStory_form">
             <label htmlFor="title">

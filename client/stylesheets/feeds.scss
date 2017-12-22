@@ -3,6 +3,9 @@
 .feeds {
     margin: 54px 0;
     padding: 0 24px;
+    a {
+        text-decoration: none;
+    }
     .feedRow {
         margin-top: 24px;
         background-color: white;

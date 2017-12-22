@@ -30,7 +30,7 @@ class Header extends React.Component {
             }}
             onKeyPress={this.handleKeyPress}
           >
-            New Story
+            submit
           </div>
         </div>
       </div>
