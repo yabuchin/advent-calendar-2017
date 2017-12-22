@@ -85,7 +85,11 @@ class App extends React.Component {
                 // component={NewStory}
                 // user={this.state.user}
               />
-              <Route path="/document/:id" component={Document} />
+              <Route
+                exact
+                path="/document/:id"
+                render={props => <Document {...props} user={this.state.user} />}
+              />
             </Switch>
           </Router>
         </div>

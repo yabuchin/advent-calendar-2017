@@ -4,7 +4,6 @@ import uuid from 'uuid/v4';
 
 import firebase from '../lib/firebase';
 
-
 class NewStory extends React.Component {
   constructor(props) {
     super(props);
