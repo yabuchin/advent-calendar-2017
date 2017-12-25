@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import 'firebase/firestore';
+import 'firebase/messaging';
 import firebaseui from 'firebaseui';
 
 
@@ -19,6 +20,8 @@ class Firebase {
     this.firebase.initializeApp(config);
 
     this.db = this.firebase.firestore();
+
+    this.msg = this.firebase.messaging();
 
     this.uiConfig = {
       signInSuccessUrl: 'http://localhost:8080',

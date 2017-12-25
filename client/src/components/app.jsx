@@ -18,6 +18,7 @@ class App extends React.Component {
     this.firebase = firebase.firebase;
     this.state = {
       user: null,
+      FCMTokenSentToServer: false,
     };
 
     // ユーザの認証状態が変化したら呼ばれる
@@ -43,6 +44,7 @@ class App extends React.Component {
           user.userId = userDoc.id;
           window.console.log('user exists: ', user.userId);
           setUser(user);
+          this.messagingFCM();
         } else { // DBに未登録
           // 新規ユーザデータを作成
           const newUser = {
@@ -70,6 +72,88 @@ class App extends React.Component {
     });
   }
 
+  messagingFCM() {
+    // FCM
+    const messaging = firebase.msg;
+
+    // サーバにトークンを送ったかどうかのフラグをstateに保存
+    const setTokenSentToServer = (sent) => {
+      this.setState({ FCMTokenSentToServer: sent });
+    };
+
+    // Firestoreのユーザデータにトークンを保存しておく
+    const sendTokenToServer = (token) => {
+      if (this.state.FCMTokenSentToServer) {
+        window.console.log('Token already sent to server');
+        return;
+      }
+      // window.console.log('currentToken: ', token);
+      const newUser = this.state.user;
+      newUser.fcmToken = token;
+      firebase.db.collection('users')
+        .doc(this.state.user.userId)
+        .set(newUser)
+        .then(() => {
+          window.console.log('successfully: send token to server');
+          this.setState({ FCMTokenSentToServer: true });
+        })
+        .catch((error) => {
+          window.console.log('error: send token toserver, ', error);
+        });
+    };
+
+    // FCMのトークン取得
+    const getToken = () => {
+      messaging.getToken()
+        .then((currentToken) => {
+          if (currentToken) {
+            sendTokenToServer(currentToken);
+          } else {
+            // Show permission request.
+            window.console.log('No Instance ID token available. Request permission to generate one.');
+            setTokenSentToServer(false);
+          }
+        })
+        .catch((err) => {
+          window.console.log('An error occurred while retrieving token. ', err);
+          setTokenSentToServer(false);
+        });
+    };
+
+    // プッシュ通知のパーミッションをユーザにもらう（ダイアログが表示される）
+    const requestPermission = () => {
+      messaging.requestPermission()
+        .then(() => {
+          window.console.log('Notification permission granted.');
+          getToken();
+        })
+        .catch((err) => {
+          window.console.log('Unable to get permission to notify.', err);
+        });
+    };
+
+    // トークンが更新されたら呼ばれる
+    messaging.onTokenRefresh(() => {
+      messaging.getToken()
+        .then((refreshedToken) => {
+          // トークンが更新されたので、サーバに再アップロード
+          window.console.log('Token refreshed.');
+          setTokenSentToServer(false);
+          sendTokenToServer(refreshedToken);
+        })
+        .catch((err) => {
+          window.console.log('Unable to retrieve refreshed token ', err);
+        });
+    });
+
+    // メッセージ受取
+    messaging.onMessage((payload) => {
+      window.console.log('Message received. ', payload);
+    });
+
+    requestPermission();
+  }
+
   render() {
     return (
       <div>
@@ -82,11 +166,10 @@ class App extends React.Component {
               <Route
                 path="/newStory"
                 render={props => <NewStory {...props} user={this.state.user} />}
-                // component={NewStory}
-                // user={this.state.user}
+              // component={NewStory}
+              // user={this.state.user}
               />
               <Route
-                exact
                 path="/document/:id"
                 render={props => <Document {...props} user={this.state.user} />}
               />

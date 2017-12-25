@@ -31,6 +31,33 @@ module.exports = [
     devtool: 'inline-source-map',
   },
   {
+    entry: [
+      './src/firebase-messaging-sw.js',
+    ],
+    output: {
+      path: publidDir,
+      publicPath: '/',
+      filename: 'firebase-messaging-sw.js',
+    },
+    module: {
+      loaders: [{
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015'],
+        },
+      }],
+    },
+    resolve: {
+      extensions: ['.js'],
+    },
+    devServer: {
+      historyApiFallback: true,
+      contentBase: publidDir,
+    },
+    devtool: 'inline-source-map',
+  },
+  {
     entry: {
       style: './stylesheets/index.scss',
     },
